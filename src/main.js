@@ -1,4 +1,4 @@
-'use strict';
+`use strict`;
 
 const TASK_COUNT = 3;
 
@@ -174,7 +174,7 @@ const createTaskCardTemplate = () => {
   );
 };
 
-// Возвращает шаблон кнопки 'Загрузить ещё'
+// Возвращает шаблон кнопки `Загрузить ещё`
 const createLoadMoreBtnTemplate = () => {
   return (
     `<button class="load-more" type="button">load more</button>`
@@ -384,7 +384,7 @@ const createTaskEditFormTemplate = () => {
 };
 
 // Отрисовывает элемент на странице
-const renderElement = (element, template, place = 'beforeend') => {
+const renderElement = (element, template, place = `beforeend`) => {
   element.insertAdjacentHTML(place, template);
 };
 
@@ -395,20 +395,20 @@ const renderTasks = (count) => {
   }
 };
 
-const mainElement = document.querySelector('.main');
-const menuContainerElement = mainElement.querySelector('.main__control');
+const mainElement = document.querySelector(`.main`);
+const menuContainerElement = mainElement.querySelector(`.main__control`);
 
 renderElement(menuContainerElement, createMenuTemplate());
 renderElement(mainElement, createFilterTemplate());
 renderElement(mainElement, createTaskBoardTemplate());
 
-const taskBoardElement = mainElement.querySelector('.board');
+const taskBoardElement = mainElement.querySelector(`.board`);
 
-renderElement(taskBoardElement, createSortTemplate(), 'afterbegin');
+renderElement(taskBoardElement, createSortTemplate(), `afterbegin`);
 renderElement(taskBoardElement, createTaskListTemplate());
 
-const taskListElement = taskBoardElement.querySelector('.board__tasks');
+const taskListElement = taskBoardElement.querySelector(`.board__tasks`);
 
 renderTasks(TASK_COUNT);
-renderElement(taskListElement, createTaskEditFormTemplate(), 'afterbegin');
+renderElement(taskListElement, createTaskEditFormTemplate(), `afterbegin`);
 renderElement(taskBoardElement, createLoadMoreBtnTemplate());
