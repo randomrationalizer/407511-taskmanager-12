@@ -1,19 +1,28 @@
+import {isTaskRepeating, isTaskExpired, humanizeDate} from "../util.js";
+
+
 // Возвращает шаблон карточки задачи
-export const createTaskTemplate = () => {
-  return (
-    `<article class="card card--black">
+export const createTaskTemplate = (task) => {
+  const {description, color, dueDate, repeating, isFavorite, isArchive} = task;
+  const date = dueDate === null ? `` : humanizeDate(dueDate);
+  const deadlineClassName = isTaskExpired(dueDate) ? `card--deadline` : ``;
+  const repeatingClassName = isTaskRepeating(repeating) ? `card--repeat` : ``;
+  const favoritedClassName = isFavorite ? `card__btn--favorites card__btn--disabled` : `card__btn--favorites`;
+  const archivedClassName = isArchive ? `card__btn--archive card__btn--disabled` : `card__btn--archive`;
+
+  return `<article class="card card--${color} ${deadlineClassName} ${repeatingClassName}">
       <div class="card__form">
         <div class="card__inner">
           <div class="card__control">
             <button type="button" class="card__btn card__btn--edit">
               edit
             </button>
-            <button type="button" class="card__btn card__btn--archive">
+            <button type="button" class="card__btn ${archivedClassName}">
               archive
             </button>
             <button
               type="button"
-              class="card__btn card__btn--favorites"
+              class="card__btn ${favoritedClassName}"
             >
               favorites
             </button>
@@ -26,7 +35,7 @@ export const createTaskTemplate = () => {
           </div>
 
           <div class="card__textarea-wrap">
-            <p class="card__text">Example task with default color.</p>
+            <p class="card__text">${description}.</p>
           </div>
 
           <div class="card__settings">
@@ -34,7 +43,7 @@ export const createTaskTemplate = () => {
               <div class="card__dates">
                 <div class="card__date-deadline">
                   <p class="card__input-deadline-wrap">
-                    <span class="card__date">23 September</span>
+                    <span class="card__date">${date}</span>
                   </p>
                 </div>
               </div>
@@ -42,6 +51,5 @@ export const createTaskTemplate = () => {
           </div>
         </div>
       </div>
-    </article>`
-  );
+    </article>`;
 };
