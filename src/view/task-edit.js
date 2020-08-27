@@ -1,6 +1,14 @@
 import {COLORS, REPEATING_DEFAULT} from "../const.js";
-import {isTaskRepeating, isTaskExpired, humanizeDate} from "../util.js";
+import {isTaskRepeating, isTaskExpired, humanizeDate, createElement} from "../util.js";
 
+const BLANK_TASK = {
+  color: COLORS[0],
+  description: ``,
+  dueDate: null,
+  repeating: REPEATING_DEFAULT,
+  isArchive: false,
+  isFavorite: false
+};
 
 // Возвращает шаблон выбора даты
 const createTaskDateEditTemplate = (dueDate) => {
@@ -61,14 +69,8 @@ const createTaskColorEditTemplate = (currentColor) => {
 };
 
 // Возвращает шаблон формы редактирования/создания задачи
-export const createTaskEditFormTemplate = (task = {}) => {
-
-  const {
-    color = `black`,
-    description = ``,
-    dueDate = null,
-    repeating = REPEATING_DEFAULT
-  } = task;
+const createTaskEditFormTemplate = (task) => {
+  const {color, description, dueDate, repeating} = task;
 
   const deadlineClassName = isTaskExpired(dueDate) ? `card--deadline` : ``;
   const dateTemplate = createTaskDateEditTemplate(dueDate);
@@ -119,3 +121,26 @@ export const createTaskEditFormTemplate = (task = {}) => {
       </form>
     </article>`;
 };
+
+export default class TaskEditView {
+  constructor(task = BLANK_TASK) {
+    this._task = task;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createTaskEditFormTemplate(this._task);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

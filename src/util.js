@@ -1,3 +1,34 @@
+// Позиция отрисовки элемента
+export const RenderPosition = {
+  AFTERBEGIN: `afterbegin`,
+  BEFOREEND: `beforeend`
+};
+
+// Отрисовывает элемент в контейнере
+export const render = (container, element, place) => {
+  switch (place) {
+    case RenderPosition.AFTERBEGIN:
+      container.prepend(element);
+      break;
+    case RenderPosition.BEFOREEND:
+      container.append(element);
+      break;
+  }
+};
+
+// Создаёт DOM-элемент компонента
+export const createElement = (template) => {
+  const newElement = document.createElement(`div`);
+  newElement.innerHTML = template;
+
+  return newElement.firstChild;
+};
+
+// Отрисовывает шаблон элемента
+export const renderTemplate = (container, template, place) => {
+  container.insertAdjacentHTML(place, template);
+};
+
 // Возвращает сегодняшнюю дату
 const getCurrentDate = () => {
   const currentDate = new Date();

@@ -1,8 +1,7 @@
-import {isTaskRepeating, isTaskExpired, humanizeDate} from "../util.js";
-
+import {isTaskRepeating, isTaskExpired, humanizeDate, createElement} from "../util.js";
 
 // Возвращает шаблон карточки задачи
-export const createTaskTemplate = (task) => {
+const createTaskTemplate = (task) => {
   const {description, color, dueDate, repeating, isFavorite, isArchive} = task;
   const date = dueDate === null ? `` : humanizeDate(dueDate);
   const deadlineClassName = isTaskExpired(dueDate) ? `card--deadline` : ``;
@@ -53,3 +52,26 @@ export const createTaskTemplate = (task) => {
       </div>
     </article>`;
 };
+
+export default class TaskView {
+  constructor(task) {
+    this._task = task;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createTaskTemplate(this._task);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
