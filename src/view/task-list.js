@@ -1,17 +1,17 @@
 import {createElement} from "../util.js";
 
-// Возвращает шаблон блока доски задач
-const createTaskBoardTemplate = () => {
-  return `<section class="board container"></section>`;
+// Возвращает шаблон списка задач
+const createTaskListTemplate = () => {
+  return `<div class="board__tasks"></div>`;
 };
 
-export default class BoardView {
+export default class TaskListView {
   constructor() {
     this._element = null;
   }
 
   getTemplate() {
-    return createTaskBoardTemplate();
+    return createTaskListTemplate();
   }
 
   getElement() {
