@@ -1,4 +1,5 @@
-import {isTaskRepeating, isTaskExpired, humanizeDate, createElement} from "../util.js";
+import {isTaskRepeating, isTaskExpired, humanizeDate} from "../util.js";
+import AbstarctView from "../view/abstarct.js";
 
 // Возвращает шаблон карточки задачи
 const createTaskTemplate = (task) => {
@@ -53,25 +54,24 @@ const createTaskTemplate = (task) => {
     </article>`;
 };
 
-export default class TaskView {
+export default class TaskView extends AbstarctView {
   constructor(task) {
+    super();
     this._task = task;
-    this._element = null;
+    this._editClickHandler = this._editClickHandler.bind(this);
   }
 
   getTemplate() {
     return createTaskTemplate(this._task);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  _editClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.editClick();
   }
 
-  removeElement() {
-    this._element = null;
+  setEditClickHandler(callback) {
+    this._callback.editClick = callback;
+    this.getElement().querySelector(`.card__btn--edit`).addEventListener(`click`, this._editClickHandler);
   }
 }

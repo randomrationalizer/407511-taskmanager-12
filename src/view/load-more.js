@@ -1,28 +1,27 @@
-import {createElement} from "../util.js";
+import AbstractView from "../view/abstarct.js";
 
 // Возвращает шаблон кнопки `Загрузить ещё`
 const createLoadMoreBtnTemplate = () => {
   return `<button class="load-more" type="button">load more</button>`;
 };
 
-export default class LoadMoreView {
+export default class LoadMoreView extends AbstractView {
   constructor() {
-    this._element = null;
+    super();
+    this._loadMoreClickHandler = this._loadMoreClickHandler.bind(this);
   }
 
   getTemplate() {
     return createLoadMoreBtnTemplate();
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  _loadMoreClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.loadMoreClick();
   }
 
-  removeElement() {
-    this._element = null;
+  setLoadMoreClickHandler(callback) {
+    this._callback.loadMoreClick = callback;
+    this.getElement().addEventListener(`click`, this._loadMoreClickHandler);
   }
 }

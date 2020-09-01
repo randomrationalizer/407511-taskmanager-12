@@ -1,5 +1,6 @@
 import {COLORS, REPEATING_DEFAULT} from "../const.js";
-import {isTaskRepeating, isTaskExpired, humanizeDate, createElement} from "../util.js";
+import {isTaskRepeating, isTaskExpired, humanizeDate} from "../util.js";
+import AbstarctView from "../view/abstarct.js";
 
 const BLANK_TASK = {
   color: COLORS[0],
@@ -122,25 +123,24 @@ const createTaskEditFormTemplate = (task) => {
     </article>`;
 };
 
-export default class TaskEditView {
+export default class TaskEditView extends AbstarctView {
   constructor(task = BLANK_TASK) {
+    super();
     this._task = task;
-    this._element = null;
+    this._formSubmitHandler = this._formSubmitHandler.bind(this);
   }
 
   getTemplate() {
     return createTaskEditFormTemplate(this._task);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  _formSubmitHandler(evt) {
+    evt.preventDefault();
+    this._callback.formSubmit();
   }
 
-  removeElement() {
-    this._element = null;
+  setFormSubmitHandler(callback) {
+    this._callback.formSubmit = callback;
+    this.getElement().querySelector(`form`).addEventListener(`submit`, this._formSubmitHandler);
   }
 }
