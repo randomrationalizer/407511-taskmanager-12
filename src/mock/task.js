@@ -1,5 +1,5 @@
 import {COLORS, REPEATING_DEFAULT} from "../const.js";
-import {getRandomInteger} from "../util.js";
+import {getRandomInteger} from "../utils/common.js";
 
 // Моковые описания задач
 const DESCRIPTIONS = [

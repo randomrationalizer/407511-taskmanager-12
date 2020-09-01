@@ -1,4 +1,4 @@
-import {isTaskRepeating, isTaskExpired, humanizeDate} from "../util.js";
+import {isTaskRepeating, isTaskExpired, humanizeDate} from "../utils/task.js";
 import AbstarctView from "../view/abstarct.js";
 
 // Возвращает шаблон карточки задачи

@@ -9,7 +9,7 @@ import LoadMoreView from "./view/load-more.js";
 import TaskEditView from "./view/task-edit.js";
 import {generateTask} from "./mock/task.js";
 import {generateFilter} from "./mock/filter.js";
-import {RenderPosition, render} from "./util.js";
+import {RenderPosition, render, replace, remove} from "./utils/render.js";
 
 const TASK_COUNT = 22;
 const TASK_COUNT_PER_STEP = 8;
@@ -24,7 +24,7 @@ const menuContainerElement = mainElement.querySelector(`.main__control`);
 const renderTask = (taskListElement, task) => {
   const taskComponent = new TaskView(task);
   const taskEditComponent = new TaskEditView(task);
-  render(taskListElement, taskComponent.getElement(), RenderPosition.BEFOREEND);
+  render(taskListElement, taskComponent, RenderPosition.BEFOREEND);
 
   const onEscKeyDown = (evt) => {
     if (evt.key === `Esc` || evt.key === `Escape`) {
@@ -35,11 +35,11 @@ const renderTask = (taskListElement, task) => {
   };
 
   const replaceCardToForm = () => {
-    taskListElement.replaceChild(taskEditComponent.getElement(), taskComponent.getElement());
+    replace(taskEditComponent, taskComponent);
   };
 
   const replaceFormToCard = () => {
-    taskListElement.replaceChild(taskComponent.getElement(), taskEditComponent.getElement());
+    replace(taskComponent, taskEditComponent);
   };
 
   taskComponent.setEditClickHandler(() => {
@@ -58,47 +58,46 @@ const renderBoard = (boardContainer, boardTasks) => {
   const boardComponent = new BoardView();
   const taskListComponent = new TaskListView();
 
-  render(mainElement, boardComponent.getElement(), RenderPosition.BEFOREEND);
-  render(boardComponent.getElement(), taskListComponent.getElement(), RenderPosition.BEFOREEND);
+  render(mainElement, boardComponent, RenderPosition.BEFOREEND);
+  render(boardComponent, taskListComponent, RenderPosition.BEFOREEND);
 
   // Если все задачи в архиве или массив задач пустой - отрисовывает заглушку
   if (tasks.every((task) => task.isArchive)) {
-    render(boardComponent.getElement(), new NoTasksView().getElement(), RenderPosition.AFTERBEGIN);
+    render(boardComponent, new NoTasksView(), RenderPosition.AFTERBEGIN);
     return;
   }
 
   // Отрисовка сортировки
-  render(boardComponent.getElement(), new SortView().getElement(), RenderPosition.AFTERBEGIN);
+  render(boardComponent, new SortView(), RenderPosition.AFTERBEGIN);
 
   // Отрисовка первой порции карточек задач
   boardTasks
     .slice(0, Math.min(tasks.length, TASK_COUNT_PER_STEP))
-    .forEach((boardTask) => renderTask(taskListComponent.getElement(), boardTask));
+    .forEach((boardTask) => renderTask(taskListComponent, boardTask));
 
   // Отрисовка кнопки "Load more" и добавление обработчика события клик, отрисовывающего ещё 8 (или меньше) карточек
   if (boardTasks.length > TASK_COUNT_PER_STEP) {
     let renderedTaskCount = TASK_COUNT_PER_STEP;
 
     const loadMoreBtnComponent = new LoadMoreView();
-    render(boardComponent.getElement(), loadMoreBtnComponent.getElement(), RenderPosition.BEFOREEND);
+    render(boardComponent, loadMoreBtnComponent, RenderPosition.BEFOREEND);
 
     loadMoreBtnComponent.setLoadMoreClickHandler(() => {
       boardTasks
         .slice(renderedTaskCount, renderedTaskCount + TASK_COUNT_PER_STEP)
-        .forEach((boardTask) => renderTask(taskListComponent.getElement(), boardTask));
+        .forEach((boardTask) => renderTask(taskListComponent, boardTask));
 
       renderedTaskCount += TASK_COUNT_PER_STEP;
 
       if (renderedTaskCount >= boardTasks.length) {
-        loadMoreBtnComponent.getElement().remove();
-        loadMoreBtnComponent.removeElement();
+        remove(loadMoreBtnComponent);
       }
     });
   }
 };
 
 
-render(menuContainerElement, new MenuView().getElement(), RenderPosition.BEFOREEND);
-render(mainElement, new FilterView(filters).getElement(), RenderPosition.BEFOREEND);
+render(menuContainerElement, new MenuView(), RenderPosition.BEFOREEND);
+render(mainElement, new FilterView(filters), RenderPosition.BEFOREEND);
 
 renderBoard(mainElement, tasks);

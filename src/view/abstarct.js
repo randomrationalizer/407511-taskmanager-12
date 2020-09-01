@@ -1,4 +1,4 @@
-import {createElement} from "../util.js";
+import {createElement} from "../utils/render.js";
 
 // Абстрактный класс компонентов
 export default class AbstarctView {
