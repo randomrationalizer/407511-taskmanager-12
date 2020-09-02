@@ -1,4 +1,4 @@
-import {isTaskRepeating, isTaskExpired, isTaskExpiringToday} from "../util.js";
+import {isTaskRepeating, isTaskExpired, isTaskExpiringToday} from "../utils/task.js";
 
 
 // Мапа соответствия названий фильтров и функций-счётчиков количества элементов, удовлетворяющих фильтру
