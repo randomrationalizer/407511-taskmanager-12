@@ -1,4 +1,4 @@
-import AbstarctView from "../view/abstarct.js";
+import AbstractView from "./abstract.js";
 
 // Возвращает шаблон одного элемента фильтра
 const createFilterItemTemplate = (filter, isChecked) => {
@@ -30,7 +30,7 @@ const createFilterTemplate = (filterItems) => {
   );
 };
 
-export default class FilterView extends AbstarctView {
+export default class FilterView extends AbstractView {
   constructor(filters) {
     super();
     this._filters = filters;
