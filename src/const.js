@@ -17,3 +17,9 @@ export const REPEATING_DEFAULT = {
   sa: false,
   su: false
 };
+
+export const SortType = {
+  DEFAULT: `default`,
+  DATE_DOWN: `date-down`,
+  DATE_UP: `date-up`
+};

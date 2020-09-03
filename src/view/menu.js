@@ -1,4 +1,4 @@
-import AbstractView from "../view/abstarct.js";
+import AbstractView from "./abstract.js";
 
 // Возвращает шаблон элемента меню
 const createMenuTemplate = () => {

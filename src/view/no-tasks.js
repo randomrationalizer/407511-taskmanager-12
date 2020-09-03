@@ -1,4 +1,4 @@
-import AbstractView from "../view/abstarct.js";
+import AbstractView from "./abstract.js";
 
 const createNoTasksTemplate = () => {
   return `<p class="board__no-tasks">

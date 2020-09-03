@@ -1,5 +1,5 @@
 import {isTaskRepeating, isTaskExpired, humanizeDate} from "../utils/task.js";
-import AbstarctView from "../view/abstarct.js";
+import AbstractView from "./abstract.js";
 
 // Возвращает шаблон карточки задачи
 const createTaskTemplate = (task) => {
@@ -54,7 +54,7 @@ const createTaskTemplate = (task) => {
     </article>`;
 };
 
-export default class TaskView extends AbstarctView {
+export default class TaskView extends AbstractView {
   constructor(task) {
     super();
     this._task = task;

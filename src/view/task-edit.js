@@ -1,6 +1,6 @@
 import {COLORS, REPEATING_DEFAULT} from "../const.js";
 import {isTaskRepeating, isTaskExpired, humanizeDate} from "../utils/task.js";
-import AbstarctView from "../view/abstarct.js";
+import AbstractView from "./abstract.js";
 
 const BLANK_TASK = {
   color: COLORS[0],
@@ -123,7 +123,7 @@ const createTaskEditFormTemplate = (task) => {
     </article>`;
 };
 
-export default class TaskEditView extends AbstarctView {
+export default class TaskEditView extends AbstractView {
   constructor(task = BLANK_TASK) {
     super();
     this._task = task;

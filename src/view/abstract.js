@@ -1,9 +1,9 @@
 import {createElement} from "../utils/render.js";
 
 // Абстрактный класс компонентов
-export default class AbstarctView {
+export default class AbstractView {
   constructor() {
-    if (new.target === AbstarctView) {
+    if (new.target === AbstractView) {
       throw new Error(`Can't instantiate Abstract class, only concrete one.`);
     }
 

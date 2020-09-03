@@ -1,4 +1,4 @@
-import AbstractView from "../view/abstarct.js";
+import AbstractView from "../view/abstract.js";
 
 // Позиция отрисовки элемента
 export const RenderPosition = {
