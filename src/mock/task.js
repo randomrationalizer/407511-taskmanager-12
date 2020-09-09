@@ -8,6 +8,9 @@ const DESCRIPTIONS = [
   `Пройти интенсив на соточку`
 ];
 
+// Генерирует случайный id
+const generateId = () => Date.now() + parseInt(Math.random() * 10000, 10);
+
 // Возвращает случайное значение из массива
 const getRandomValue = (values) => {
   const randomIndex = getRandomInteger(0, values.length - 1);
@@ -54,6 +57,7 @@ export const generateTask = () => {
   const repeating = dueDate === null ? generateRepeating() : REPEATING_DEFAULT;
 
   return {
+    id: generateId(),
     description: getRandomValue(DESCRIPTIONS),
     dueDate,
     repeating,
